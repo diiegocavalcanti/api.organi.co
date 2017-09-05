@@ -1,52 +1,30 @@
-let usuarios = [{
-    id: 3,
-    nome: "Diego",
-    sobrenome: "Cavalcanti",
-    email: "diego@agenciamoob.com.br",
-    senha: "1234admin",
-    cpf: "99999999999",
-    endereco: {
-        rua: "Rua do Riachuelo",
-        numero: "325",
-        cep: "50050400",
-        bairro: "Boa Vista",
-        cidade: "Recife",
-        estado: "Pernambuco",
-        complemento: "Apto 20"
-    },
-    carrinho: [
-        { id_produto: 2, qtde: 10 },
-        { id_produto: 3, qtde: 1 },
-        { id_produto: 4, qtde: 500 }
-    ],
-    compras: [{
-        id_compra: 1,
-        data: "11/09/2017",
-        hora: "12:59:17",
-        produtos: [{
-            id_produto: 10,
-            qtde: 100
-        }]
+module.exports = function(app) {
+    let controller = {};
+    let Usuario = app.models.usuarios;
 
-    }]
-}];
+    controller.listarUsuarios = function(req, res) {
 
-function getUsuarios() {
-    return usuarios;
-}
+        Usuario.find().exec().then(
+            function(usuarios) {
+                return res.json(usuarios);
+            },
+            function(error) {
+                res.render('error', { message: 'Usuário não encontrado', error: { status: 404, stack: error } }).status(500);
+            }
+        );
 
-module.exports = function() {
-    var controller = {};
-    controller.usuarios = function(req, res) {
-        res.json(getUsuarios());
     }
     controller.getUsuario = function(req, res) {
         let id = req.params.id;
-        let usuario = usuarios.filter(function(usuario) {
-            return usuario.id == id;
-        })[0];
+        Usuario.findById(id).exec()
+            .then(function(usuario) {
+                    return usuario ? res.json(usuario) : res.render('error', { message: 'Usuário não encontrado', error: { status: 404, stack: 'Id não encontrado' } }).status(404);
+                },
+                function(error) {
+                    res.render('error', { message: 'Aconteceu um erro', error: { status: 500, stack: error } }).status(500);
+                });
 
-        return usuario ? res.json(usuario) : res.render('error', { message: 'Usuário não encontrado', error: { status: 404, stack: 'Id não encontrado' } }).status(404);
+
     };
 
     controller.salvarUsuario = function(req, res) {

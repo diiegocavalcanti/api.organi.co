@@ -5,8 +5,8 @@ module.exports = function() {
         id: { type: String, required: true },
         nome: { type: String, required: true },
         sobrenome: { type: String, required: true },
-        email: { type: String, required: true },
-        senha: { type: String, required: true, index: { unique: true } },
+        email: { type: String, required: true, index: { unique: true } },
+        senha: { type: String, required: true },
         cpf: { type: String },
         endereco: {
             rua: { type: String },
