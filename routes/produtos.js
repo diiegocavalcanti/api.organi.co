@@ -3,4 +3,5 @@ module.exports = function(app) {
     app.get('/produtos', controller.produtos);
     app.get('/produtos/:id', controller.getProduto);
     app.get('/produtos/tipo/:tipo', controller.getTiposProdutos);
+    app.post('/produto', controller.insertProduto);
 };

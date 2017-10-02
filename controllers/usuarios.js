@@ -28,7 +28,16 @@ module.exports = function(app) {
     };
 
     controller.salvarUsuario = function(req, res) {
-
+        let usuario = new Usuario(req.body);
+        usuario.save(function(erro, usuario){
+            if(erro) {
+                res.status(500).end();
+                console.log(erro)
+            } else {
+                console.log(usuario);
+                res.json(usuario);
+            }
+        });
     };
 
     controller.removerUsuario = function(req, res) {

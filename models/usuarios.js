@@ -2,7 +2,6 @@ var mongoose = require('mongoose');
 
 module.exports = function() {
     var schema = mongoose.Schema({
-        id: { type: String, required: true },
         nome: { type: String, required: true },
         sobrenome: { type: String, required: true },
         email: { type: String, required: true, index: { unique: true } },
@@ -18,15 +17,15 @@ module.exports = function() {
             complemento: { type: String }
         },
         carrinho: [
-            { id_produto: { type: Number }, qtde: { type: Number } }
+            { id_produto: { type: String }, qtde: { type: String } }
         ],
         compras: [{
-            id_compra: { type: Number },
+            id_compra: { type: String },
             data: { type: String },
             hora: { type: String },
             produtos: [{
-                id_produto: { type: Number },
-                qtde: { type: Number }
+                id_produto: { type: String },
+                qtde: { type: String }
             }]
 
         }]
