@@ -1,4 +1,4 @@
-{
+[{
         "titulo": "Banana",
         "descricao": "Banana descricao exemplo",
         "imgUrl": "http://api.organi.co/public/images/banana.jpg",
@@ -8,7 +8,7 @@
         "tipo": "FRUTA",
         "validade": "10/11/2017",
         "isOrganico": "false"
-};
+},
 
 {
     "nome": "Rodrigo",
@@ -40,4 +40,4 @@
         }]
 
     }]
-}
+}]

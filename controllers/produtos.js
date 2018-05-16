@@ -26,17 +26,23 @@ module.exports = function(app) {
     controller.getTiposProdutos = function(req, res) {
         let tipo = req.params.tipo;
         tipo = tipo.toUpperCase();
-        let produto = produtos.filter(function(produto) {
-            return produto.tipo == tipo;
-        })[0];
 
-        return produto ? res.json(produto) : res.render('error', { message: 'Produto não encontrado', error: { status: 404, stack: 'Tipo não encontrado' } }).status(404);
+        var condicao = { tipo: tipo };
+
+        Produtos.find(condicao).exec().then(
+            function(produto){
+                return produto ? res.json(produto) : res.render('error', { message: 'Produto não encontrado', error: { status: 404, stack: 'Id não encontrado' } }).status(404);
+
+            }, function(error){
+                res.render('error', { message: 'Aconteceu um erro', error: { status: 500, stack: error } }).status(500);
+
+            });
     }
 
     controller.insertProduto = function(req, res){
         let produto = new Produtos(req.body);
 
-        produto.save(function(erro, produto) {
+        Produtos.insert(function(erro, produto) {
             if(erro) {
                 res.status(500).end();
                 console.log(erro)
